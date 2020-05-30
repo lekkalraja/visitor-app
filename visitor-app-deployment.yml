@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visitor-app-deployment
+  labels:
+    app: visitor-app-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: visitor-app
+  template:
+    metadata:
+      name: visitor-app
+      labels:
+        app: visitor-app
+    spec:
+      containers:
+      - name: visitor-app
+        image: rlekkalaa/visitor-app:latest
+        ports:
+        - containerPort: 9080
+      - nampe: redis
+          ports:
+          - containerPort: 6379
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: visitor-app-service
+spec:
+  type: NodePort
+  selector:
+    app: visitor-app
+  ports:
+  - protocol: TCP
+    name: visitor-app
+    port: 9080
+    targetPort: 9080
+    nodePort: 31200
