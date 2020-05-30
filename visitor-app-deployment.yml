@@ -22,8 +22,9 @@ spec:
         ports:
         - containerPort: 9080
       - nampe: redis
-          ports:
-          - containerPort: 6379
+        image: redis
+        ports:
+        - containerPort: 6379
 
 ---
 kind: Service

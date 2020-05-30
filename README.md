@@ -6,9 +6,10 @@ This project will demonstrate how to build and deploy dockerize application into
 ### Dependencies:
 To run this project you need to install below componenets in your system.
 1. JDK-11
-2. Docker
-3. Minicube
-4. kubectl/kubeadm
+2. Redis server (Docker image should be ok)
+3. Docker
+4. Minicube
+5. kubectl/kubeadm
 
 ### Build and Push Docker Image:
 1. In this assignment, I am building a micro service and it's docker image pushing into my own docker hub repository. I have created a docker repository called "rlekkalaa/visitor-app".
