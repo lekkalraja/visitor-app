@@ -17,9 +17,9 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class VisitorServiceTest {
+public class VisitorServiceImplTest {
 
-    @InjectMocks private VisitorService visitorService;
+    @InjectMocks private VisitorServiceImpl visitorService;
     @Mock private ReactiveRedisOperations<String,String> reactiveRedisOperations;
     @Mock private ReactiveValueOperations reactiveValueOperations;
 
