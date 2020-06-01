@@ -11,7 +11,7 @@ To run this project you need to install below componenets in your system.
 4. Minicube
 5. kubectl/kubeadm
 
-### To Application Locally
+### To Run Application Locally
 
 1. Stat the redis server.
     * docker run -p 6379:6379 redis
