@@ -18,10 +18,7 @@ To run this project you need to install below componenets in your system.
 2. Start the application (should have maven locally)
     * mvn clean install
     * mvn spring-boot:run
-3. alternatively can run with docker-compose    expose:
-      - "6379"
-    ports:
-      - "6379:6379"
+3. alternatively can run with docker-compose   
 
 ### Build and Push Docker Image:
 1. Change to Project location.
