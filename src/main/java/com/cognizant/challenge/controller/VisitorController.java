@@ -1,8 +1,7 @@
 package com.cognizant.challenge.controller;
 
+import com.cognizant.challenge.service.VisitorService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,33 +9,30 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 
-@Slf4j
+/**
+ * Controller for Visitor Application
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("visitor")
 public class VisitorController {
 
-    private final ReactiveRedisOperations<String, String> redisOps;
-    private static final String PAGE_VIEW = "pageView";
+    private final VisitorService visitorService;
 
+    /**
+     * Endpoint to retrive the page views
+     * @return Visior Count
+     */
     @GetMapping
     public Mono<String> pageViews(){
-        return redisOps.opsForValue().get(PAGE_VIEW).map(pageView -> {
-            long views = Long.valueOf(pageView) + 1l;
-            redisOps.opsForValue().set(PAGE_VIEW, String.valueOf(views))
-                    .thenMany(redisOps.keys("*")
-                    .flatMap(redisOps.opsForValue()::get))
-                    .subscribe(System.out::println);;
-            return String.format("‘This is the %s visitor’", pageView);
-        });
+        return visitorService.getVisitorCount();
     }
 
+    /**
+     * Initialises the redis key with default value (0) for demo.
+     */
     @PostConstruct
     public void init(){
-        // For Demo, initializing page_view key into the redis
-        redisOps.opsForValue().set(PAGE_VIEW, String.valueOf(0))
-                .thenMany(redisOps.keys("*")
-                .flatMap(redisOps.opsForValue()::get))
-                .subscribe(System.out::println);
+        visitorService.initialiseCount();
     }
 }

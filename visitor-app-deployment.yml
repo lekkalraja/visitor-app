@@ -6,7 +6,7 @@ metadata:
   labels:
     app: visitor-app-dep
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: visitor-app
@@ -21,7 +21,7 @@ spec:
         image: rlekkalaa/visitor-app:latest
         ports:
         - containerPort: 9080
-      - nampe: redis
+      - name: redis
         image: redis
         ports:
         - containerPort: 6379
