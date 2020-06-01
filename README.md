@@ -11,7 +11,7 @@ To run this project you need to install below componenets in your system.
 4. Minicube
 5. kubectl/kubeadm
 
-### To Application Locally
+### To Run Application Locally
 
 1. Stat the redis server.
     * docker run -p 6379:6379 redis
@@ -27,13 +27,13 @@ To run this project you need to install below componenets in your system.
 1. Change to Project location.
 2. Run Below commands to build docker image and push to docker hub.
     * docker build -t visitor-app .   (Assuming Dockerfile is in current directory)
-    * docker tag visitor-app:latest <docker-repo>:latest
-    * docker push <docker-repo>:latest
+    * docker tag visitor-app:latest docker-repo:latest
+    * docker push docker-repo:latest
 3. Above steps are there in build.sh
 4. Run Below command to deploy app into Kubernetes cluster.
     * kubectl create -f visitor-app-deployment.yml (Should have locally minikube/kuberenetes cluster)
 5. Execute the below command to test the application after deploying to cluster
-    * curl  http://<minikube-ip>:31200/visitor
+    * curl  http://minikube-ip:31200/visitor
     
 ### CI/CD Work flow:
 Used below components to create CI/CD Pipeline.
