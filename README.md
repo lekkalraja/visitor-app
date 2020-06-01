@@ -11,33 +11,37 @@ To run this project you need to install below componenets in your system.
 4. Minicube
 5. kubectl/kubeadm
 
+### To Application Locally
+
+1. Stat the redis server.
+    * docker run -p 6379:6379 redis
+2. Start the application (should have maven locally)
+    * mvn clean install
+    * mvn spring-boot:run
+3. alternatively can run with docker-compose    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+
 ### Build and Push Docker Image:
-1. In this assignment, I am building a micro service and it's docker image pushing into my own docker hub repository. I have created a docker repository called "rlekkalaa/visitor-app".
-2. Created a build.sh script to build and push the docker images. 
-3. Before running the build.sh make sure you have login into the docker hub by running below command.
-    * docker login
-4. Next run the build.sh and make sure you have docker hub repository created to push your docker images.
-     * ./build.sh <repository>
-     * Ex: ./build.sh rlekkalaa/visitor-app
-5. On successful build you will be able to see the docker image on your docker hub reposiotry.
-
-### Deploy Instructions
-
-Note: You can directly deploy by skipping build step. By default deployment script will use my docker image from my docker hub.
-
-To deploy the successful docker images to kubernetes I have build two solutions use any one of them based on your environment configured on your system.
-1. Kubernetes service Deployment
-2. Jenkins Pipeline
-###### Kubernetes service Deployment
-* ./deploy.sh or 
-* kubectl create -f microservice-deployment.yml
-###### Jenkins Pipeline
-* Imort the Jenkinsfile to your Jenkins pipline and run the deployment through Jenkins
-### Test Instructions
-On successful deployment you can run below script to test weather your deployed services are working expected or not. 
-* ./test.sh
-
+1. Change to Project location.
+2. Run Below commands to build docker image and push to docker hub.
+    * docker build -t visitor-app .   (Assuming Dockerfile is in current directory)
+    * docker tag visitor-app:latest <docker-repo>:latest
+    * docker push <docker-repo>:latest
+3. Above steps are there in build.sh
+4. Run Below command to deploy app into Kubernetes cluster.
+    * kubectl create -f visitor-app-deployment.yml (Should have locally minikube/kuberenetes cluster)
+5. Execute the below command to test the application after deploying to cluster
+    * curl  http://<minikube-ip>:31200/visitor
+    
 ### CI/CD Work flow:
+Used below components to create CI/CD Pipeline.
+1. Choose GitHub as a SCM.
+2. Created Jenkins Job to automate CI&CD pipeline.
+3. Created Docker Hub Repository to hold docker images (Similarly we can push to ACR/ECR).
+4. Then deploy to target location it might AWS Fargate/ AWS EKS or Azure Kuberetes services.
+
 <img src="images/CI:CD Work flow.png" center="ture" width="1500">
 
 ### Jenkins Pipeline:
